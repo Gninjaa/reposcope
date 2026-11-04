@@ -47,7 +47,9 @@ docker compose up -d postgres etcd minio milvus
 
 在 `.env` 配置聊天模型的 `LLM_API_KEY`、`LLM_BASE_URL`、`LLM_MODEL`；使用远程仓库同步时，配置所需最小权限的 GitHub Token。
 
-数据库、容器与内部配置沿用 `devflow` 标识，可按默认配套配置启动。RepoScope 是项目展示名。
+默认数据库、向量集合、容器与数据卷使用 `reposcope` 标识。
+
+从旧命名版本升级时，请先备份并迁移数据库、向量集合、工作区配置和 Docker 数据卷，更新本地 `.env`；本次改名不会自动迁移既有数据。MCP 客户端与服务端需同时升级，以使用一致的 `reposcope_*` 工具名。
 
 ### 后端（macOS / Linux）
 

@@ -944,7 +944,7 @@ def _build_conversation_tools(repo: Repository | None, conversation: Conversatio
             arguments["repo_id"] = str(repo.id)
         if conversation:
             arguments["conversation_id"] = str(conversation.id)
-        if tool_name == "devflow_search_evidence":
+        if tool_name == "reposcope_search_evidence":
             arguments.setdefault("query", input_data.get("message") or "")
         result = await mcp_client.call_tool(tool_name, arguments)
         text_parts = [
@@ -953,20 +953,20 @@ def _build_conversation_tools(repo: Repository | None, conversation: Conversatio
             if isinstance(item, dict) and item.get("type") == "text"
         ]
         return {
-            "route": tool_name.replace("devflow_", ""),
+            "route": tool_name.replace("reposcope_", ""),
             "tool_calls": [{"tool_name": tool_name, "arguments": arguments, "status": "success"}],
             "answer": "\n".join(text_parts).strip(),
             "citations": [],
         }
 
     async def search_evidence_mcp(input_data: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
-        return await call_memory_mcp("devflow_search_evidence", input_data, context)
+        return await call_memory_mcp("reposcope_search_evidence", input_data, context)
 
     async def get_thread_context_mcp(input_data: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
-        return await call_memory_mcp("devflow_get_thread_context", input_data, context)
+        return await call_memory_mcp("reposcope_get_thread_context", input_data, context)
 
     async def read_session_events_mcp(input_data: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
-        return await call_memory_mcp("devflow_read_session_events", input_data, context)
+        return await call_memory_mcp("reposcope_read_session_events", input_data, context)
 
     async def list_workspace_files(input_data: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
         workspace_root = _workspace_root(repo)
@@ -1306,9 +1306,9 @@ def _build_conversation_tools(repo: Repository | None, conversation: Conversatio
         "report_agent.generate_weekly_report": generate_report,
         "safety_agent.classify_action_risk": check_safety,
         "workflow.run_engineering_review": run_engineering_workflow,
-        "devflow_search_evidence": search_evidence_mcp,
-        "devflow_get_thread_context": get_thread_context_mcp,
-        "devflow_read_session_events": read_session_events_mcp,
+        "reposcope_search_evidence": search_evidence_mcp,
+        "reposcope_get_thread_context": get_thread_context_mcp,
+        "reposcope_read_session_events": read_session_events_mcp,
     }
 
 

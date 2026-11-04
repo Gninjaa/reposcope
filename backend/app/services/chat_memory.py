@@ -536,7 +536,7 @@ class ContextAssembler:
                 transcript_ref = (boundary.meta or {}).get("transcript_ref") or {}
                 rehydration = (boundary.meta or {}).get("rehydration") or {}
                 recovery_hint = (
-                    "\nExact transcript recovery: call devflow_get_thread_context with this conversation"
+                    "\nExact transcript recovery: call reposcope_get_thread_context with this conversation"
                     if transcript_ref
                     else ""
                 )
@@ -932,7 +932,7 @@ class ProgressiveContextManager:
                 "transcript_ref": {
                     "repo_id": str(repo.id),
                     "conversation_id": str(conversation.id),
-                    "tool": "devflow_get_thread_context",
+                    "tool": "reposcope_get_thread_context",
                 },
                 "messages_summarized": len(summarized_rows),
                 "messages_preserved": len(keep_rows),
@@ -997,8 +997,8 @@ class ProgressiveContextManager:
             "active_skills": active_skills,
             "recent_tools": recent_tools,
             "recovery": {
-                "exact_transcript_tool": "devflow_get_thread_context",
-                "sealed_session_tool": "devflow_read_session_events",
+                "exact_transcript_tool": "reposcope_get_thread_context",
+                "sealed_session_tool": "reposcope_read_session_events",
             },
         }
 
@@ -1319,7 +1319,7 @@ class MemoryTools:
             self.db,
             repo_id=self.repo_id,
             conversation_id=self.conversation_id,
-            tool_name="devflow_search_evidence",
+            tool_name="reposcope_search_evidence",
             query=query,
             results=results,
             citations=citations,
@@ -1418,7 +1418,7 @@ class MemoryTools:
             self.db,
             repo_id=self.repo_id,
             conversation_id=self.conversation_id,
-            tool_name="devflow_get_thread_context",
+            tool_name="reposcope_get_thread_context",
             query=keyword or str(message_id or ""),
             results=results,
             citations=citations,
@@ -1503,7 +1503,7 @@ class MemoryTools:
             self.db,
             repo_id=self.repo_id,
             conversation_id=self.conversation_id,
-            tool_name="devflow_read_session_events",
+            tool_name="reposcope_read_session_events",
             query=str(session_id or "latest sessions"),
             results=results,
             citations=citations,
