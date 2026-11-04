@@ -49,8 +49,6 @@ docker compose up -d postgres etcd minio milvus
 
 默认数据库、向量集合、容器与数据卷使用 `reposcope` 标识。
 
-从旧命名版本升级时，请先备份并迁移数据库、向量集合、工作区配置和 Docker 数据卷，更新本地 `.env`；本次改名不会自动迁移既有数据。MCP 客户端与服务端需同时升级，以使用一致的 `reposcope_*` 工具名。
-
 ### 后端（macOS / Linux）
 
 ```bash
